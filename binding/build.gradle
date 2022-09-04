@@ -1,0 +1,17 @@
+
+apply from: "$buildGradlePath/build-library-android.gradle"
+
+android {
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+}
+
+dependencies {
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2"
+
+    api "androidx.appcompat:appcompat:1.5.0"
+
+    compileOnly 'me.reezy.cosmo:dialog-custom:0.7.0'
+}
