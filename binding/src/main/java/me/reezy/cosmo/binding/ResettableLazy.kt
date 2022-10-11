@@ -1,8 +1,5 @@
 package me.reezy.cosmo.binding
 
-import kotlin.reflect.KProperty
-
-
 internal class ResettableLazy<T>(lock: Any? = null, private val initializer: () -> T) : Lazy<T> {
 
     private object UninitializedValue
@@ -41,7 +38,4 @@ internal class ResettableLazy<T>(lock: Any? = null, private val initializer: () 
 
     override fun toString(): String = if (isInitialized()) value.toString() else "Lazy value not initialized yet."
 
-    operator fun setValue(any: Any, property: KProperty<*>, t: T) {
-        _value = t
-    }
 }

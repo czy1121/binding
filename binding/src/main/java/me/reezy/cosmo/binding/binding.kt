@@ -50,8 +50,8 @@ internal fun <T : ViewBinding> inflate(clazz: Class<T>, owner: LifecycleOwner? =
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 @PublishedApi
-internal fun <T : ViewBinding> binding(clazz: Class<T>, owner: LifecycleOwner? = null, viewProvider: () -> View) = lazyBinding(owner) {
-    val view = viewProvider()
+internal fun <T : ViewBinding> binding(clazz: Class<T>, owner: LifecycleOwner? = null, viewFinder: () -> View) = lazyBinding(owner) {
+    val view = viewFinder()
     val bind = clazz.getMethod("bind", View::class.java)
     val binding = bind(null, view) as T
     if (owner is Fragment && binding is ViewDataBinding) {
@@ -66,7 +66,7 @@ private fun <T : ViewBinding> lazyBinding(owner: LifecycleOwner?, initializer: (
         return lazy(initializer)
     }
 
-    val lazyView = ResettableLazy {
+    val lazyViewBinding = ResettableLazy {
         val binding = initializer()
         if (binding is ViewDataBinding && binding.lifecycleOwner == null) {
             binding.lifecycleOwner = owner
@@ -75,17 +75,17 @@ private fun <T : ViewBinding> lazyBinding(owner: LifecycleOwner?, initializer: (
     }
 
     val onDestroy = LifecycleEventObserver { _, event ->
-        if (event == Lifecycle.Event.ON_DESTROY) {
-            (lazyView.value as? ViewDataBinding)?.apply {
+        if (event == Lifecycle.Event.ON_DESTROY && lazyViewBinding.isInitialized()) {
+            (lazyViewBinding.value as? ViewDataBinding)?.apply {
                 unbind()
                 lifecycleOwner = null
             }
-            lazyView.reset()
+            lazyViewBinding.reset()
         }
     }
     owner.lifecycle.addObserver(LifecycleEventObserver { source, event ->
         if (event == Lifecycle.Event.ON_START) {
-            val owner1 = (lazyView.value as? ViewDataBinding)?.lifecycleOwner
+            val owner1 = (lazyViewBinding.value as? ViewDataBinding)?.lifecycleOwner
             if (owner1 != owner) {
                 owner1?.lifecycle?.addObserver(onDestroy)
             }
@@ -94,6 +94,6 @@ private fun <T : ViewBinding> lazyBinding(owner: LifecycleOwner?, initializer: (
         }
     })
 
-    return lazyView
+    return lazyViewBinding
 }
 
