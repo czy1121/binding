@@ -27,7 +27,7 @@ internal class ResettableLazy<T>(lock: Any? = null, private val initializer: () 
                 if (_v2 !== UninitializedValue) {
                     @Suppress("UNCHECKED_CAST") (_v2 as T)
                 } else {
-                    val typedValue = initializer!!()
+                    val typedValue = initializer()
                     _value = typedValue
                     typedValue
                 }

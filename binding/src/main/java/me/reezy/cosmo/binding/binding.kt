@@ -44,8 +44,14 @@ val ViewGroup.resolveLifecycleOwner: LifecycleOwner
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 @PublishedApi
 internal fun <T : ViewBinding> inflate(clazz: Class<T>, owner: LifecycleOwner? = null, view: ViewGroup) = lazyBinding(owner) {
-    val inflate = clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
-    inflate(null, LayoutInflater.from(view.context), view, true) as T
+    try {
+        val inflate = clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
+        inflate(null, LayoutInflater.from(view.context), view, true) as T
+    } catch (ex: NoSuchMethodException) {
+        // <merge> 标签为 ViewBinding 根元素时
+        val inflate = clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java)
+        inflate(null, LayoutInflater.from(view.context), view) as T
+    }
 }
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
