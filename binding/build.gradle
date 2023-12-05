@@ -3,8 +3,8 @@ apply from: "$buildGradlePath/build-library-android.gradle"
 
 
 dependencies {
+    implementation libs.androidx.appcompat
 
-    compileOnly "androidx.appcompat:appcompat:1.6.1"
     compileOnly "androidx.databinding:databinding-runtime:7.4.2"
     compileOnly "androidx.databinding:viewbinding:7.4.2"
     compileOnly 'me.reezy.cosmo:dialog-custom:0.8.0'
