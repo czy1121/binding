@@ -16,5 +16,5 @@ dependencies {
     implementation libs.coil.kt
 
     compileOnly 'me.reezy.cosmo:bk:0.8.0'
-    compileOnly 'me.reezy.cosmo:tv:0.8.0'
+    compileOnly 'me.reezy.cosmo:tv:0.9.0'
 }
