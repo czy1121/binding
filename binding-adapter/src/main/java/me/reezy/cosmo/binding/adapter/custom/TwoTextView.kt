@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package me.reezy.cosmo.binding.adapter.view
+package me.reezy.cosmo.binding.adapter.custom
 
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter

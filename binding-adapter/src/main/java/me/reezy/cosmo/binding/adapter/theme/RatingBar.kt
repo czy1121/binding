@@ -1,10 +1,22 @@
 @file:Suppress("FunctionName")
 
-package me.reezy.cosmo.binding.adapter.view
+package me.reezy.cosmo.binding.adapter.theme
 
 import android.content.res.ColorStateList
+import android.widget.AbsListView
 import android.widget.RatingBar
 import androidx.databinding.BindingAdapter
+import androidx.databinding.BindingMethod
+import androidx.databinding.BindingMethods
+
+//@BindingMethods(
+//    BindingMethod(type = RatingBar::class, attribute = "android:progressTint", method = "setProgressTintList"),
+//    BindingMethod(type = RatingBar::class, attribute = "android:secondaryProgressTint", method = "setSecondaryProgressTint"),
+//    BindingMethod(type = RatingBar::class, attribute = "android:progressBackgroundTint", method = "setProgressBackgroundTint"),
+//)
+//object RatingBarBindingAdapter {
+//
+//}
 
 
 @BindingAdapter("progressTint")
