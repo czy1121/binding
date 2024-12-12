@@ -9,8 +9,8 @@ repositories {
     maven { url "https://gitee.com/ezy/repo/raw/cosmo/"}
 }
 dependencies {
-    implementation "me.reezy.cosmo:binding:0.8.0"
-    implementation "me.reezy.cosmo:binding-adapter:0.8.0"
+    implementation "me.reezy.cosmo:binding:0.10.0"
+    implementation "me.reezy.cosmo:binding-adapter:0.10.0"
 }
 ```
 
